@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+        
+        {% block title %}Content - Notes Digest{% endblock %}
+        
+        {% block content %}
+        <h1>Content</h1>
+        
+        {% if content %}
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Content</th>
+                    <th>Date Processed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in content %}
+                <tr>
+                    <td class="content-type {{ item[2] }}">{{ item[2] }}</td>
+                    <td>{{ item[3]|truncate_text(50) }}</td>
+                    <td>{{ item[6]|format_date }}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="{{ url_for('view_content', content_id=item[0]) }}" class="button small">View</a>
+                            <form method="post" action="{{ url_for('delete_content', content_id=item[0]) }}" onsubmit="return confirm('Are you sure you want to delete this content?');" style="display: inline;">
+                                <button type="submit" class="button small danger">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="{{ url_for('content', page=page-1, per_page=per_page) }}" class="button">Previous</a>
+            {% endif %}
+            
+            <span class="page-info">Page {{ page }} of {{ total_pages }}</span>
+            
+            {% if page < total_pages %}
+            <a href="{{ url_for('content', page=page+1, per_page=per_page) }}" class="button">Next</a>
+            {% endif %}
+        </div>
+        {% else %}
+        <p>No content found</p>
+        {% endif %}
+        {% endblock %}

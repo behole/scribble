@@ -1,0 +1,678 @@
+/* Main layout */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f5f5f5;
+        margin: 0;
+    }
+    
+    header {
+        background-color: #2c3e50;
+        color: white;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+    }
+    
+    nav li {
+        margin-left: 1rem;
+        position: relative;
+    }
+    
+    nav a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    nav a:hover {
+        text-decoration: underline;
+    }
+    
+    .debug-menu {
+        position: relative;
+    }
+    
+    .submenu {
+        display: none;
+        position: absolute;
+        background-color: #34495e;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        right: 0;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+    }
+    
+    .submenu li {
+        margin: 0;
+        padding: 0;
+        display: block;
+    }
+    
+    .submenu a {
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+    
+    .submenu a:hover {
+        background-color: #2c3e50;
+    }
+    
+    .debug-menu:hover .submenu {
+        display: block;
+    }
+    
+    main {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    
+    h1 {
+        margin-bottom: 2rem;
+        color: #2c3e50;
+    }
+    
+    footer {
+        text-align: center;
+        padding: 1rem;
+        background-color: #2c3e50;
+        color: white;
+        margin-top: 2rem;
+    }
+    
+    /* Buttons */
+    .button {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    
+    .button:hover {
+        background-color: #2980b9;
+    }
+    
+    .button.secondary {
+        background-color: #95a5a6;
+    }
+    
+    .button.secondary:hover {
+        background-color: #7f8c8d;
+    }
+    
+    .button.danger {
+        background-color: #e74c3c;
+    }
+    
+    .button.danger:hover {
+        background-color: #c0392b;
+    }
+    
+    .button.small {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Flash messages */
+    .flashes {
+        margin-bottom: 2rem;
+    }
+    
+    .flash {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+    }
+    
+    .flash.success {
+        background-color: #dff0d8;
+        color: #3c763d;
+        border: 1px solid #d6e9c6;
+    }
+    
+    .flash.error {
+        background-color: #f2dede;
+        color: #a94442;
+        border: 1px solid #ebccd1;
+    }
+    
+    /* Dashboard */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        gap: 2rem;
+    }
+    
+    .dashboard-card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    
+    .dashboard-card h2 {
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        margin: 0;
+    }
+    
+    .card-content {
+        padding: 1rem;
+    }
+    
+    .digest-preview {
+        margin-bottom: 1.5rem;
+    }
+    
+    .digest-preview h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .action-buttons {
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    /* Content and tasks */
+    .content-list, .task-list {
+        list-style: none;
+    }
+    
+    .content-list li, .task-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .content-type {
+        display: inline-block;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        background-color: #e9ecef;
+    }
+    
+    .content-type.document {
+        background-color: #d1ecf1;
+        color: #0c5460;
+    }
+    
+    .content-type.image {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .content-type.pdf {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    
+    .content-type.web_clip {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    
+    .content-type.ai_chat {
+        background-color: #e2e3e5;
+        color: #383d41;
+    }
+    
+    .date {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+    
+    /* Task list */
+    .task-form {
+        display: flex;
+        align-items: center;
+    }
+    
+    .task-text {
+        margin-left: 0.5rem;
+    }
+    
+    .task-text.completed {
+        text-decoration: line-through;
+        color: #6c757d;
+    }
+    
+    .task-controls {
+        margin-bottom: 1rem;
+    }
+    
+    .task-section {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .task-section h2 {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e9ecef;
+        color: #2c3e50;
+    }
+    
+    .task-list.full-list li {
+        padding: 0.75rem 0;
+    }
+    
+    .due-date {
+        font-size: 0.8rem;
+        color: #dc3545;
+        margin-left: 1rem;
+    }
+    
+    /* Statistics */
+    .stats {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+    }
+    
+    .stat-value {
+        display: block;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    
+    .stat-label {
+        display: block;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    /* Digests */
+    .digest-controls {
+        margin-bottom: 1.5rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .digest-section {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .digest-list {
+        list-style: none;
+        margin-top: 1rem;
+    }
+    
+    .digest-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .digest-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    /* Viewing digest */
+    .digest-header {
+        margin-bottom: 2rem;
+    }
+    
+    .digest-meta {
+        color: #6c757d;
+        margin-bottom: 1rem;
+    }
+    
+    .digest-content {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+    }
+    
+    .markdown-content h2 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 0.5rem;
+    }
+    
+    .markdown-content h1, 
+    .markdown-content h2, 
+    .markdown-content h3, 
+    .markdown-content h4, 
+    .markdown-content h5, 
+    .markdown-content h6 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+    }
+    
+    .markdown-content ul, 
+    .markdown-content ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .markdown-content p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .notice {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    
+    .notice.info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+    }
+    
+    .notice.warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+    }
+    
+    .notice.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+    
+    .notice.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    
+    /* Additional styling for content processed by LLM */
+    .markdown-content {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        line-height: 1.6;
+        white-space: normal;
+        padding: 1rem;
+        background-color: #ffffff;
+        border-radius: 4px;
+    }
+    
+    .markdown-content pre,
+    .markdown-content code {
+        font-family: monospace;
+        background-color: #f8f9fa;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+    }
+    
+    .markdown-content pre {
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
+    
+    .markdown-content blockquote {
+        border-left: 4px solid #e9ecef;
+        padding-left: 1rem;
+        color: #6c757d;
+        margin: 1rem 0;
+    }
+    
+    /* Content table */
+    .content-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .content-table th,
+    .content-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .content-table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+    
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .page-info {
+        color: #6c757d;
+    }
+    
+    /* View content */
+    .content-header {
+        margin-bottom: 2rem;
+    }
+    
+    .content-meta {
+        color: #6c757d;
+        margin-bottom: 1rem;
+    }
+    
+    .content-tags {
+        margin-bottom: 2rem;
+    }
+    
+    .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .tag {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        color: #495057;
+        text-decoration: none;
+    }
+    
+    .tag:hover {
+        background-color: #dee2e6;
+    }
+    
+    .content-sections {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+    }
+    
+    .content-section {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+    }
+    
+    .content-section h2 {
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .content-text {
+        white-space: pre-wrap;
+        font-family: monospace;
+        overflow-x: auto;
+    }
+    
+    .content-text pre {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 0;
+        border: 1px solid #e9ecef;
+    }
+    
+    /* Tag cloud */
+    .tag-cloud {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .tag-cloud .tag {
+        margin: 0.5rem;
+        display: inline-block;
+    }
+    
+    /* Settings form */
+    .settings-form {
+        max-width: 800px;
+    }
+    
+    .settings-section {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .settings-section h2 {
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+    
+    .form-group input[type="text"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    
+    .form-group.checkbox {
+        display: flex;
+        align-items: center;
+    }
+    
+    .form-group.checkbox input {
+        margin-right: 0.5rem;
+    }
+    
+    .form-group.checkbox label {
+        margin: 0;
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    /* File upload form */
+    .upload-form {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .upload-info {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+    }
+    
+    .upload-info h2 {
+        margin-bottom: 1rem;
+    }
+    
+    .upload-info ul {
+        list-style-position: inside;
+    }
+    
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            padding: 0.5rem;
+        }
+        
+        nav ul {
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        
+        nav li {
+            margin: 0.25rem;
+        }
+        
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .content-sections {
+            grid-template-columns: 1fr;
+        }
+    }

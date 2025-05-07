@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+        
+        {% block title %}Digests - Notes Digest{% endblock %}
+        
+        {% block content %}
+        <h1>Digests</h1>
+        
+        <div class="digest-controls">
+            <a href="{{ url_for('generate_digest', digest_type='weekly') }}" class="button">Generate Weekly</a>
+            <a href="{{ url_for('generate_digest', digest_type='monthly') }}" class="button">Generate Monthly</a>
+        </div>
+        
+        <div class="digest-section">
+            <h2>Weekly Digests</h2>
+            {% if weekly_digests %}
+            <ul class="digest-list">
+                {% for digest in weekly_digests %}
+                <li>
+                    <a href="{{ url_for('view_digest', digest_id=digest[0]) }}">
+                        {{ digest[3]|format_date }} - {{ digest[4]|format_date }}
+                    </a>
+                    <div class="digest-actions">
+                        <a href="{{ url_for('download_digest', digest_id=digest[0]) }}" class="button small">Download</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No weekly digests available</p>
+            {% endif %}
+        </div>
+        
+        <div class="digest-section">
+            <h2>Monthly Digests</h2>
+            {% if monthly_digests %}
+            <ul class="digest-list">
+                {% for digest in monthly_digests %}
+                <li>
+                    <a href="{{ url_for('view_digest', digest_id=digest[0]) }}">
+                        {{ digest[3]|format_date|format_date }} - {{ digest[4]|format_date }}
+                    </a>
+                    <div class="digest-actions">
+                        <a href="{{ url_for('download_digest', digest_id=digest[0]) }}" class="button small">Download</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No monthly digests available</p>
+            {% endif %}
+        </div>
+        {% endblock %}

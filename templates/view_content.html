@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+        
+        {% block title %}Content - Notes Digest{% endblock %}
+        
+        {% block content %}
+        <div class="content-header">
+            <h1>Content</h1>
+            <div class="content-meta">
+                <p>Type: <span class="content-type {{ content[2] }}">{{ content[2] }}</span></p>
+                <p>File: {{ file_info[1] }}</p>
+                <p>Processed: {{ content[6]|format_datetime }}</p>
+            </div>
+            <div class="content-actions">
+                <a href="{{ url_for('content') }}" class="button">Back to Content</a>
+            </div>
+        </div>
+        
+        {% if tags %}
+        <div class="content-tags">
+            <h2>Tags</h2>
+            <div class="tag-list">
+                {% for tag in tags %}
+                <a href="{{ url_for('view_tag', tag_name=tag) }}" class="tag">#{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if tasks %}
+        <div class="content-tasks">
+            <h2>Tasks</h2>
+            <ul class="task-list">
+                {% for task in tasks %}
+                <li>
+                    <form action="{{ url_for('toggle_task', task_id=task[0]) }}" method="post" class="task-form">
+                        <input type="checkbox" {% if task[3] %}checked{% endif %} onchange="this.form.submit()">
+                        <span class="task-text {% if task[3] %}completed{% endif %}">{{ task[2] }}</span>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        <div class="content-sections">
+            <div class="content-section">
+                <h2>Raw Content</h2>
+                <div class="content-text">
+                    {% if content[3] and content[3]|length > 10 %}
+                        {% if content[3].startswith("PDF text extracted via LLM analysis") %}
+                            <div class="notice info">
+                                This PDF's text was extracted using Claude's advanced analysis instead of traditional text extraction.
+                            </div>
+                            <div class="markdown-content">
+                                {{ content[3].split("\n\n", 1)[1]|safe }}
+                            </div>
+                        {% else %}
+                            <pre>{{ content[3] }}</pre>
+                        {% endif %}
+                    {% else %}
+                        <div class="notice warning">
+                            No text could be extracted directly from this file.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {% if content[4] %}
+            <div class="content-section">
+                <h2>Processed Content</h2>
+                <div class="content-text">
+                    {% if content[3].startswith("PDF text extracted via LLM analysis") %}
+                        <div class="notice info">
+                            Additional analysis and structured content from Claude:
+                        </div>
+                    {% endif %}
+                    <div class="markdown-content">
+                        {{ content[4]|safe }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+        
+        {% block title %}Settings - Notes Digest{% endblock %}
+        
+        {% block content %}
+        <h1>Settings</h1>
+        
+        <form method="post" class="settings-form">
+            <div class="settings-section">
+                <h2>Basic Settings</h2>
+                
+                <div class="form-group">
+                    <label for="notes_folder">Notes Folder:</label>
+                    <input type="text" id="notes_folder" name="notes_folder" value="{{ config.notes_folder }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="output_dir">Output Directory:</label>
+                    <input type="text" id="output_dir" name="output_dir" value="{{ config.output_dir }}">
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Schedule Settings</h2>
+                
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="weekly_digest" name="weekly_digest" {% if config.schedule.weekly_digest %}checked{% endif %}>
+                    <label for="weekly_digest">Enable Weekly Digest</label>
+                </div>
+                
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="monthly_digest" name="monthly_digest" {% if config.schedule.monthly_digest %}checked{% endif %}>
+                    <label for="monthly_digest">Enable Monthly Digest</label>
+                </div>
+                
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="task_list" name="task_list" {% if config.schedule.task_list %}checked{% endif %}>
+                    <label for="task_list">Enable Task List Generation</label>
+                </div>
+                
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="suggested_reading" name="suggested_reading" {% if config.schedule.suggested_reading %}checked{% endif %}>
+                    <label for="suggested_reading">Enable Suggested Reading</label>
+                </div>
+            </div>
+            
+            <div class="settings-section">
+                <h2>Processing Settings</h2>
+                
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="enable_ocr" name="enable_ocr" {% if config.processing.enable_ocr %}checked{% endif %}>
+                    <label for="enable_ocr">Enable OCR for Images and PDFs</label>
+                </div>
+                
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="enable_web_fetching" name="enable_web_fetching" {% if config.processing.enable_web_fetching %}checked{% endif %}>
+                    <label for="enable_web_fetching">Enable Web Content Fetching</label>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="button">Save Settings</button>
+                <a href="{{ url_for('index') }}" class="button secondary">Cancel</a>
+            </div>
+        </form>
+        {% endblock %}

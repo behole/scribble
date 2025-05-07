@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+    
+    {% block title %}Dashboard - Notes Digest{% endblock %}
+    
+    {% block content %}
+    <h1>Dashboard</h1>
+    
+    <div class="dashboard-grid">
+        <div class="dashboard-card">
+            <h2>Recent Digests</h2>
+            <div class="card-content">
+                {% if latest_weekly %}
+                <div class="digest-preview">
+                    <h3>Weekly Digest: {{ latest_weekly[3]|format_date }} - {{ latest_weekly[4]|format_date }}</h3>
+                    <p>{{ latest_weekly[5]|truncate_text }}</p>
+                    <a href="{{ url_for('view_digest', digest_id=latest_weekly[0]) }}" class="button">View</a>
+                </div>
+                {% else %}
+                <p>No weekly digests available</p>
+                {% endif %}
+                
+                {% if latest_monthly %}
+                <div class="digest-preview">
+                    <h3>Monthly Digest: {{ latest_monthly[3]|format_date|format_date }} - {{ latest_monthly[4]|format_date }}</h3>
+                    <p>{{ latest_monthly[5]|truncate_text }}</p>
+                    <a href="{{ url_for('view_digest', digest_id=latest_monthly[0]) }}" class="button">View</a>
+                </div>
+                {% else %}
+                <p>No monthly digests available</p>
+                {% endif %}
+                
+                <div class="action-buttons">
+                    <a href="{{ url_for('generate_digest', digest_type='weekly') }}" class="button">Generate Weekly</a>
+                    <a href="{{ url_for('generate_digest', digest_type='monthly') }}" class="button">Generate Monthly</a>
+                    <a href="{{ url_for('digests') }}" class="button">All Digests</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-card">
+            <h2>Recent Content</h2>
+            <div class="card-content">
+                {% if recent_content %}
+                <ul class="content-list">
+                    {% for item in recent_content %}
+                    <li>
+                        <span class="content-type {{ item[2] }}">{{ item[2] }}</span>
+                        <a href="{{ url_for('view_content', content_id=item[0]) }}">
+                            {{ item[3]|truncate_text(50) }}
+                        </a>
+                        <span class="date">{{ item[6]|format_date }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No content available</p>
+                {% endif %}
+                
+                <div class="action-buttons">
+                    <a href="{{ url_for('content') }}" class="button">All Content</a>
+                    <a href="{{ url_for('process_file') }}" class="button">Add File</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-card">
+            <h2>Tasks</h2>
+            <div class="card-content">
+                {% if active_tasks %}
+                <ul class="task-list">
+                    {% for task in active_tasks[:5] %}
+                    <li>
+                        <form action="{{ url_for('toggle_task', task_id=task[0]) }}" method="post" class="task-form">
+                            <input type="checkbox" onchange="this.form.submit()">
+                            <span class="task-text">{{ task[2] }}</span>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No active tasks</p>
+                {% endif %}
+                
+                <div class="action-buttons">
+                    <a href="{{ url_for('tasks') }}" class="button">All Tasks</a>
+                    <a href="{{ url_for('generate_digest', digest_type='tasks') }}" class="button">Generate Task List</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-card">
+            <h2>Statistics</h2>
+            <div class="card-content">
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-value">{{ content_stats[0] }}</span>
+                        <span class="stat-label">Total Items</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">{{ active_tasks|length }}</span>
+                        <span class="stat-label">Active Tasks</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">{{ completed_tasks|length }}</span>
+                        <span class="stat-label">Completed Tasks</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

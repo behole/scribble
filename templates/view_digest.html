@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+        
+        {% block title %}Digest - Notes Digest{% endblock %}
+        
+        {% block content %}
+        <div class="digest-header">
+            <h1>{{ digest[1]|title }} Digest</h1>
+            <div class="digest-meta">
+                <p>Period: {{ digest[3]|format_date }} - {{ digest[4]|format_date }}</p>
+                <p>Created: {{ digest[6]|format_datetime }}</p>
+            </div>
+            <div class="digest-actions">
+                <a href="{{ url_for('download_digest', digest_id=digest[0]) }}" class="button">Download</a>
+                <a href="{{ url_for('digests') }}" class="button">Back to Digests</a>
+            </div>
+        </div>
+        
+        <div class="digest-content markdown-content">
+            {{ digest_content|safe }}
+        </div>
+        {% endblock %}

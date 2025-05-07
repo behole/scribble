@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Notes Digest{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <header>
+            <div class="logo">Notes Digest</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('digests') }}">Digests</a></li>
+                    <li><a href="{{ url_for('tasks') }}">Tasks</a></li>
+                    <li><a href="{{ url_for('content') }}">Content</a></li>
+                    <li><a href="{{ url_for('tags') }}">Tags</a></li>
+                    <li><a href="{{ url_for('process_file') }}">Process File</a></li>
+                    <li><a href="{{ url_for('settings') }}">Settings</a></li>
+                    <li class="debug-menu">
+                        <a href="#" onclick="return false;">Debug ▾</a>
+                        <ul class="submenu">
+                            <li><a href="{{ url_for('clear_cache') }}">Clear Cache</a></li>
+                            <li><a href="{{ url_for('reset_database') }}" onclick="return confirm('WARNING: This will reset the entire database. All content will be lost. Are you sure?');">Reset Database</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div class="flashes">
+                  {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+            
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer>
+            <p>Notes Digest &copy; {{ now.year }}</p>
+        </footer>
+    </body>
+    </html>

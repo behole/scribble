@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+        
+        {% block title %}Tag: #{{ tag }} - Notes Digest{% endblock %}
+        
+        {% block content %}
+        <div class="tag-header">
+            <h1>Tag: #{{ tag }}</h1>
+            <a href="{{ url_for('tags') }}" class="button">All Tags</a>
+        </div>
+        
+        {% if content %}
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Content</th>
+                    <th>Date Processed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in content %}
+                <tr>
+                    <td class="content-type {{ item[2] }}">{{ item[2] }}</td>
+                    <td>{{ item[3]|truncate_text(100) }}</td>
+                    <td>{{ item[6]|format_date }}</td>
+                    <td>
+                        <a href="{{ url_for('view_content', content_id=item[0]) }}" class="button small">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No content found with this tag</p>
+        {% endif %}
+        {% endblock %}
